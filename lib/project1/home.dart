@@ -1,3 +1,4 @@
+import 'package:app_crud/project1/update.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Blood Donation App'),
+          centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 184, 209, 230),
         ),
         floatingActionButton: FloatingActionButton(
@@ -62,76 +64,86 @@ class _HomepageState extends State<Homepage> {
                 final DocumentSnapshot donorSnap = snapshot.data.docs[index];
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 184, 209, 230),
-                              blurRadius: 10,
-                              spreadRadius: 15),
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child: CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 184, 209, 230),
-                              radius: 30,
-                              child: Text(
-                                donorSnap['group'],
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 23),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/update', arguments: {
+                        'name': donorSnap['name'],
+                        'phone': donorSnap['phone'],
+                        'group': donorSnap['group'],
+                        'id': donorSnap.id,
+                      });
+                    },
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 184, 209, 230),
+                                blurRadius: 10,
+                                spreadRadius: 15),
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 184, 209, 230),
+                                radius: 30,
+                                child: Text(
+                                  donorSnap['group'],
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 23),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              donorSnap['name'],
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              donorSnap['phone'].toString(),
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/update',
-                                    arguments: {
-                                      'name': donorSnap['name'],
-                                      'phone': donorSnap['phone'],
-                                      'group': donorSnap['group'],
-                                      'id': donorSnap.id,
-                                    });
-                              },
-                              icon: const Icon(Icons.edit),
-                              iconSize: 30,
-                              color: Colors.blue,
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                deleteDonor(donorSnap.id);
-                              },
-                              icon: const Icon(Icons.delete),
-                              iconSize: 30,
-                              color: Colors.red,
-                            ),
-                          ],
-                        )
-                      ],
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                donorSnap['name'],
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                donorSnap['phone'].toString(),
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/update',
+                                      arguments: {
+                                        'name': donorSnap['name'],
+                                        'phone': donorSnap['phone'],
+                                        'group': donorSnap['group'],
+                                        'id': donorSnap.id,
+                                      });
+                                },
+                                icon: const Icon(Icons.edit),
+                                iconSize: 30,
+                                color: Colors.blue,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  deleteDonor(donorSnap.id);
+                                },
+                                icon: const Icon(Icons.delete),
+                                iconSize: 30,
+                                color: Colors.red,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

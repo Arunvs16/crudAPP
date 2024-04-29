@@ -18,7 +18,7 @@ class UpdateDonor extends StatelessWidget {
 
     //update fuction
 
-    void updateDonorDetail(docId) {
+    void updateDonorDetails(docId) {
       final data = {
         'name': donorName.text,
         'phone': donorPhone.text,
@@ -81,7 +81,7 @@ class UpdateDonor extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              updateDonorDetail(docId);
+              updateDonorDetails(docId);
             },
             style: ButtonStyle(
                 minimumSize:
